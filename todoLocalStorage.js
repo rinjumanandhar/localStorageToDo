@@ -1,10 +1,11 @@
 (function()
 {
     var list = document.querySelector('#list'),
-        form = document.querySelector('form'),
-        item = document.querySelector('#item');
+        form = document.querySelector('#add'),
+        item = document.querySelector('#item'),
+        clrAll = document.getElementById("clear");
     
-    form.addEventListener('submit',function(e)
+    form.addEventListener('click',function(e)
     {
         e.preventDefault();
         list.innerHTML += '<li>' + item.value + '</li>';
@@ -15,9 +16,19 @@
     list.addEventListener('click',function(e)
     {
         var t = e.target;
-        t.classList.contains('checked')? t.parentNode.removeChild(t):   //ternary operator
+        t.classList.contains('checked')? t.parentNode.removeChild(t):   //if the listed item is checked then remove
                                         t.classList.add('checked');
         store();
+    })
+
+    //clear all data from localStorage
+    clrAll.addEventListener('click', function () 
+    {
+        localStorage.clear();
+        while (list.firstChild) 
+        {
+            list.removeChild(list.firstChild);
+        }
     })
     
     function store() 
@@ -38,4 +49,6 @@
         }
     }
     getValues();
+
+    
   })();         //IIFE
